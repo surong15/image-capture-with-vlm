@@ -1,0 +1,17 @@
+# Milvus VLM 系統所需的 Python 依賴
+
+# 核心依賴
+pymilvus>=2.3.6
+sentence-transformers>=2.2.2
+opencv-python>=4.8.0
+Pillow>=10.0.0
+requests>=2.31.0
+numpy>=1.24.0
+
+# UI 依賴 (通常已包含在 Python 中)
+# tkinter 是 Python 標準庫的一部分
+
+# 可選依賴 (用於開發和調試)
+jupyter>=1.0.0
+matplotlib>=3.7.0
+pandas>=2.0.0
