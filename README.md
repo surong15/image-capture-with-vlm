@@ -1,124 +1,124 @@
-# VLM + Milvus 向量資料庫整合系統
+# VLM + Milvus Vector Database Integration System
 
-一個整合視覺語言模型（Vision Language Model）與 Milvus 向量資料庫的桌面應用程式，支援圖像問答、對話歷史管理、向量搜尋等功能。
+A desktop application that integrates a Vision Language Model (VLM) with a Milvus vector database, supporting image-based Q&A, conversation history management, vector search, and more.
 
-## 主要功能
+## Key Features
 
-### 核心功能
-- **即時圖像問答**：使用相機拍攝照片，透過 AI 模型進行圖像理解和問答
-- **多模型支援**：可選擇本機已安裝的 Ollama 模型（支援圖像輸入的模型）
-- **向量資料庫儲存**：將對話和圖像直接儲存在 Milvus 向量資料庫中
-- **對話歷史管理**：查看、搜尋歷史對話記錄
-- **圖像檢視**：從歷史記錄中檢視之前拍攝的圖像
+### Core Functions
+- **Real-time Image Q&A**: Capture photos through a camera and perform image understanding and question answering using an AI model.
+- **Multi-model Support**: Select from locally installed Ollama models that support image input.
+- **Vector Database Storage**: Store conversations and images directly in the Milvus vector database.
+- **Conversation History Management**: View and search through previously stored conversations.
+- **Image Viewer**: Inspect past images stored in conversation history.
 
-### 技術特色
-- **圖像內嵌儲存**：圖像以 base64 格式直接儲存在向量資料庫中
-- **語義搜尋**：使用向量相似度搜尋相關對話
-- **多模態支援**：支援 LLaVA、gemma3 等多模態模型
-- **即時處理**：相機即時預覽，快速圖像分析
+### Technical Highlights
+- **Embedded Image Storage**: Images are stored directly in the vector database as base64-encoded strings.
+- **Semantic Search**: Perform vector similarity search to retrieve related conversations.
+- **Multimodal Support**: Works with multimodal models like LLaVA, Gemma3, and others.
+- **Real-time Processing**: Live camera preview and fast image analysis.
 
-## 系統需求
+## System Requirements
 
-### 硬體需求
-- 相機設備（內建或外接）
-- 至少 8GB RAM（推薦 16GB）
-- 支援 CUDA 的 GPU（可選，用於加速推理）
+### Hardware
+- Camera device (built-in or external)
+- At least 8GB RAM (16GB recommended)
+- GPU with CUDA support (optional for faster inference)
 
-### 軟體需求
+### Software
 - Python 3.8+
-- Docker（用於運行 Milvus）
-- Ollama（本地 AI 模型服務）
+- Docker (for running Milvus)
+- Ollama (local AI model server)
 
-## 安裝步驟
+## Installation
 
-### 1. 安裝 Python 依賴
+### 1. Install Python Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. 安裝並啟動 Ollama
+### 2. Install and Start Ollama
 
 ```bash
-# 安裝 Ollama（macOS）
+# Install Ollama (macOS)
 curl -fsSL https://ollama.ai/install.sh | sh
 
-# 啟動 Ollama 服務
+# Start the Ollama service
 ollama serve
 
-# 下載支援圖像的模型
+# Download an image-capable model
 ollama pull llava-phi3:latest
-# 或
+# or
 ollama pull llava:latest
 ```
 
-### 3. 啟動 Milvus 向量資料庫
+### 3. Launch the Milvus Vector Database
 
 ```bash
-# 使用 Docker Compose 啟動 Milvus
 docker-compose up -d
 ```
 
-### 4. 啟動 Attu 管理介面（可選）
+### 4. (Optional) Launch Attu Management Interface
 
 ```bash
 docker run -p 8000:3000 -e MILVUS_URL=localhost:19530 zilliz/attu:latest
 ```
 
-## 專案結構
+## Project Structure
 
 ```
 vlm-project/
-├── vlm_with_milvus_model_select.py  # 主程式（模型可選版本）
-├── requirements.txt                  # Python 依賴
-├── docker-compose.yml               # Milvus 容器配置
-├── README.md                        # 專案說明文件
-└── volumes/                         # Milvus 資料儲存目錄
+├── vlm_with_milvus_model_select.py  # Main application (model-select version)
+├── requirements.txt                  # Python dependencies
+├── docker-compose.yml               # Milvus container configuration
+├── README.md                        # Project documentation
+└── volumes/                         # Milvus data storage directory
 ```
 
-## 使用方法
+## Usage
 
-### 啟動程式
+### Start the Application
 
 ```bash
 python vlm_with_milvus_model_select.py
 ```
 
-### 基本操作流程
+### Basic Workflow
 
-1. **啟動相機**：點擊「開始相機」按鈕
-2. **選擇模型**：從下拉選單選擇要使用的 AI 模型
-3. **調整參數**：設定 Temperature 等模型參數
-4. **輸入問題**：在問題輸入框輸入想要問的問題
-5. **拍照分析**：點擊「拍照分析」進行圖像問答
-6. **查看結果**：在右側查看 AI 回答
+1. **Start Camera**: Click “Start Camera”
+2. **Select Model**: Choose an AI model from the dropdown
+3. **Adjust Parameters**: Configure temperature and other options
+4. **Enter Question**: Type your question in the input box
+5. **Capture Image for Analysis**: Click “Capture & Analyze”
+6. **View Results**: The AI response will appear in the right panel
 
-### 進階功能
+### Advanced Features
 
-#### 對話歷史管理
-- **搜尋對話**：在搜尋框輸入關鍵字，按 Enter 或點擊「搜尋對話」
-- **查看歷史**：點擊「查看歷史」查看最近的對話記錄
-- **檢視影像**：點擊「檢視影像」輸入對話編號查看歷史圖像
+#### Conversation History Management
+- **Search Conversations**: Enter keywords and press Enter or click “Search”
+- **View History**: Click “View History” to browse saved conversations
+- **View Image**: Enter a conversation ID to display the stored image
 
-#### 模型管理
-- 程式會自動偵測本機已安裝的 Ollama 模型
-- 支援所有支援圖像輸入的模型（如 LLaVA、Phi3 系列）
-- 可即時切換不同模型進行推理
+#### Model Management
+- The system automatically detects installed Ollama models.
+- Supports all models capable of image input (e.g. LLaVA, Phi3 variants).
+- Models can be switched instantly within the GUI.
 
-## 配置說明
+## Configuration Details
 
-### 模型配置
-- **預設模型**：llava-phi3:latest
-- **支援模型**：所有支援圖像輸入的 Ollama 模型
-- **模型切換**：可在 GUI 中即時切換
+### Model Configuration
+- **Default Model**: `llava-phi3:latest`
+- **Supported Models**: Any Ollama model supporting vision input
+- **Runtime Switching**: Models can be swapped dynamically through the UI
 
-### 資料庫配置
-- **向量資料庫**：Milvus
-- **集合名稱**：vlm_conversations_with_images
-- **向量維度**：384（使用 paraphrase-multilingual-MiniLM-L12-v2）
-- **索引類型**：IVF_FLAT with COSINE similarity
+### Database Configuration
+- **Vector Database**: Milvus
+- **Collection Name**: `vlm_conversations_with_images`
+- **Vector Dimension**: 384 (using `paraphrase-multilingual-MiniLM-L12-v2`)
+- **Index Type**: `IVF_FLAT` with cosine similarity
 
-### 圖像處理
-- **儲存格式**：JPEG（base64 編碼）
-- **最大尺寸**：800px（自動縮放）
-- **品質控制**：自動調整以符合資料庫限制
+### Image Handling
+- **Storage Format**: JPEG (base64 encoded)
+- **Max Size**: 800px (auto resized)
+- **Quality Control**: Automatically adjusted to meet DB size constraints
+
